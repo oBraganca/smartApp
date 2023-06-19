@@ -28,7 +28,7 @@ class _TapBarNatvigationState extends State<TapBarNatvigation> {
     return Scaffold(
       appBar: AppBar(
           toolbarHeight: 70,
-          backgroundColor: const Color(0xFF111111),
+          backgroundColor: const Color(0xFF090909),
           shadowColor: Colors.transparent,
           actions: <Widget>[
             Container(
@@ -56,13 +56,13 @@ class _TapBarNatvigationState extends State<TapBarNatvigation> {
                   backgroundColor: Colors.transparent,
                 )),
           ]),
-      backgroundColor: const Color(0xFF111111),
+      backgroundColor: const Color(0xFF090909),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
       ),
       bottomNavigationBar: GNav(
-        backgroundColor: const Color(0xFF151515),
+        backgroundColor: const Color(0xFF0E0E0E),
         color: Colors.white70,
         activeColor: Colors.white,
         gap: 8,
