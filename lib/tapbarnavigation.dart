@@ -4,7 +4,7 @@ import 'package:flutter_application_1/camerascreen.dart';
 import 'package:flutter_application_1/dashboardscreen.dart';
 import 'package:flutter_application_1/homescreen.dart';
 import 'package:flutter_application_1/settingsscreen.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+
 
 class TapBarNatvigation extends StatefulWidget {
   const TapBarNatvigation({Key? key}) : super(key: key);
@@ -14,7 +14,6 @@ class TapBarNatvigation extends StatefulWidget {
 }
 
 class _TapBarNatvigationState extends State<TapBarNatvigation> {
-  int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
@@ -22,6 +21,11 @@ class _TapBarNatvigationState extends State<TapBarNatvigation> {
     CameraScreen(),
     SettingsScreen(),
   ];
+
+  int _selectedIndex = 0;
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentScreen = HomeScreen();
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,40 +60,139 @@ class _TapBarNatvigationState extends State<TapBarNatvigation> {
                   backgroundColor: Colors.transparent,
                 )),
           ]),
-      backgroundColor: const Color(0xFF090909),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _widgetOptions,
+      backgroundColor: const Color(0x13092807),
+      body: PageStorage(
+        child: currentScreen,
+        bucket: bucket,
       ),
-      bottomNavigationBar: GNav(
-        backgroundColor: const Color(0xFF0E0E0E),
-        color: Colors.white70,
-        activeColor: Colors.white,
-        gap: 8,
-        tabs: const [
-          GButton(
-            icon: Icons.home,
-            text: "Home",
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.mic),
+        backgroundColor: Color.fromRGBO(79, 70, 229, 1),
+
+        onPressed: (){},
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(17, 17, 17, 1),
+        height: 75,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 10,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                  children: <Widget>[
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentScreen=HomeScreen();
+                          _selectedIndex = 0;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.home_filled,
+                            color: _selectedIndex == 0 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white,
+                          ),
+                          Text(
+                            'Home',
+                            style: TextStyle(
+                                color: _selectedIndex == 0 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white
+
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentScreen=DashboardScreen();
+                          _selectedIndex = 1;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.layers,
+                            color: _selectedIndex == 1 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white,
+                          ),
+                          Text(
+                            'Dashboard',
+                            style: TextStyle(
+                                color: _selectedIndex == 1 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white
+
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ]
+              ),
+              Row(
+                  children: <Widget>[
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentScreen=CameraScreen();
+                          _selectedIndex = 2;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera,
+                            color: _selectedIndex == 2 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white,
+                          ),
+                          Text(
+                            'Scenes',
+                            style: TextStyle(
+                                color: _selectedIndex == 2 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white
+
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentScreen=SettingsScreen();
+                          _selectedIndex = 3;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.settings,
+                            color: _selectedIndex == 3 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white,
+                          ),
+                          Text(
+                            'Settings',
+                            style: TextStyle(
+                                color: _selectedIndex == 3 ? Color.fromRGBO(175, 170, 255, 1) : Colors.white
+
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ]
+              ),
+            ],
           ),
-          GButton(
-            icon: Icons.dashboard,
-            text: "Overview",
-          ),
-          GButton(
-            icon: Icons.camera_outlined,
-            text: "Camera",
-          ),
-          GButton(
-            icon: Icons.settings,
-            text: "Settings",
-          ),
-        ],
-        selectedIndex: _selectedIndex,
-        onTabChange: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        ),
       ),
     );
   }
